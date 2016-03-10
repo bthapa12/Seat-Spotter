@@ -12,7 +12,7 @@ public class DBConnection {
 	/**
 	 * Method to create Database Connection
 	 * 
-	 * @return
+	 * @return The connection
 	 * @throws Exception
 	 */
 	public static Connection createConnection() throws Exception {

@@ -5,17 +5,21 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class DeskHubWithDesk {
 	private int deskHubId;
-	private String deskHubLabel;
+	private int libraryFloorId;
+	private int coordinateX;
+	private int coordinateY;
 	private int totalDesks;
 	private int emptyDesks;
 	private int unknownState;
 	
 	public DeskHubWithDesk(){}
 	
-	public DeskHubWithDesk(int deskHubId, String deskHubLabel, int totalDesks,
+	public DeskHubWithDesk(int deskHubId, int libraryFloorId, int coordinateX, int coordinateY, int totalDesks,
 			int emptyDesks, int unknownState) {
 		this.deskHubId = deskHubId;
-		this.deskHubLabel = deskHubLabel;
+		this.libraryFloorId = libraryFloorId;
+		this.coordinateX = coordinateX;
+		this.coordinateY = coordinateY;
 		this.totalDesks = totalDesks;
 		this.emptyDesks = emptyDesks;
 		this.unknownState = unknownState;
@@ -27,14 +31,6 @@ public class DeskHubWithDesk {
 
 	public void setDeskHubId(int deskHubId) {
 		this.deskHubId = deskHubId;
-	}
-
-	public String getDeskHubLabel() {
-		return deskHubLabel;
-	}
-
-	public void setDeskHubLabel(String deskHubLabel) {
-		this.deskHubLabel = deskHubLabel;
 	}
 
 	public int getTotalDesks() {
@@ -61,11 +57,39 @@ public class DeskHubWithDesk {
 		this.unknownState = unknownState;
 	}
 
+	public int getLibraryFloorId() {
+		return libraryFloorId;
+	}
+
+	public void setLibraryFloorId(int libraryFloorId) {
+		this.libraryFloorId = libraryFloorId;
+	}
+
+	public int getCoordinateX() {
+		return coordinateX;
+	}
+
+	public void setCoordinateX(int coordinateX) {
+		this.coordinateX = coordinateX;
+	}
+
+	public int getCoordinateY() {
+		return coordinateY;
+	}
+
+	public void setCoordinateY(int coordinateY) {
+		this.coordinateY = coordinateY;
+	}
+
 	@Override
 	public String toString() {
-		return "DeskHub [deskHubId=" + deskHubId + ", deskHubLabel="
-				+ deskHubLabel + ", totalDesks=" + totalDesks + ", emptyDesks="
-				+ emptyDesks + ", unknownState=" + unknownState + "]";
+		return "DeskHubWithDesk [deskHubId=" + deskHubId + ", libraryFloorId="
+				+ libraryFloorId + ", coordinateX=" + coordinateX
+				+ ", coordinateY=" + coordinateY + ", totalDesks=" + totalDesks
+				+ ", emptyDesks=" + emptyDesks + ", unknownState="
+				+ unknownState + "]";
 	}
+	
+	
 	
 }

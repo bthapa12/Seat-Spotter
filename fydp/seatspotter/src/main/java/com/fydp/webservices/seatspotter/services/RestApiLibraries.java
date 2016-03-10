@@ -87,5 +87,4 @@ public class RestApiLibraries {
 		libraries.add(new LibraryWithDesk(2,"DP Library",1,1,1));
 		return libraries;
 	}
-	
 }

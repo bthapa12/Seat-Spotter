@@ -7,15 +7,18 @@ public class DeskHub {
 	
 	private int deskHubId;
 	private int floorId;
-	private String deskHubLabel;
+	private int coordinateX;
+	private int coordinateY;
 	
-	public DeskHub(){}
-	
-	public DeskHub(int deskHubId, int floorId, String deskHubLabel) {
+	public DeskHub(int deskHubId, int floorId, int coordinateX,
+			int coordinateY) {
 		this.deskHubId = deskHubId;
 		this.floorId = floorId;
-		this.deskHubLabel = deskHubLabel;
+		this.coordinateX = coordinateX;
+		this.coordinateY = coordinateY;
 	}
+
+	public DeskHub(){}
 
 	public int getDeskHubId() {
 		return deskHubId;
@@ -33,18 +36,28 @@ public class DeskHub {
 		this.floorId = floorId;
 	}
 
-	public String getDeskHubLabel() {
-		return deskHubLabel;
+	public int getCoordinateX() {
+		return coordinateX;
 	}
 
-	public void setDeskHubLabel(String deskHubLabel) {
-		this.deskHubLabel = deskHubLabel;
+	public void setCoordinateX(int coordinateX) {
+		this.coordinateX = coordinateX;
+	}
+
+	public int getCoordinateY() {
+		return coordinateY;
+	}
+
+	public void setCoordinateY(int coordinateY) {
+		this.coordinateY = coordinateY;
 	}
 
 	@Override
 	public String toString() {
 		return "DeskHub [deskHubId=" + deskHubId + ", floorId=" + floorId
-				+ ", deskHubLabel=" + deskHubLabel + "]";
+				+ ", coordinateX=" + coordinateX + ", coordinateY="
+				+ coordinateY + "]";
 	}
+	
 	
 }

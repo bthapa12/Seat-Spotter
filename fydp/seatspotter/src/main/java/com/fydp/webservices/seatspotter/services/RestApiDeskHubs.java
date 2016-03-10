@@ -18,7 +18,7 @@ import com.fydp.webservices.seatspotter.database.DBManager;
 import com.fydp.webservices.seatspotter.database.model.DeskHub;
 import com.fydp.webservices.seatspotter.database.model.DeskHubWithDesk;
 
-@Path("/libraries/{libraryId}/floors/{floorId}/deskhubs")
+@Path("/floors/{floorId}/deskhubs")
 public class RestApiDeskHubs {
 	
 	@GET
@@ -36,12 +36,20 @@ public class RestApiDeskHubs {
 		try{
 			while (result.next()){
 				int deskHubId = result.getInt("DeskHubId");
-				String deskHubLabel = result.getString("DeskHubLabel");
+				int libraryFloorId = result.getInt("LibraryFloorID");
+				int coordinateX = result.getInt("CoordinateX");
+				int coordinateY = result.getInt("CoordinateY");
 				int totalDesks = result.getInt("TotalDesks");
 				int emptyDesks = result.getInt("EmptyDesks");
 				int unknownState = result.getInt("UnknownState");
 				
-				deskHubs.add(new DeskHubWithDesk(deskHubId,deskHubLabel,totalDesks,emptyDesks,unknownState));
+				deskHubs.add(new DeskHubWithDesk(deskHubId, 
+							libraryFloorId, 
+							coordinateX, 
+							coordinateY, 
+							totalDesks,
+							emptyDesks,
+							unknownState));
 			}
 		} catch (Exception e){
 			e.printStackTrace();
@@ -54,11 +62,12 @@ public class RestApiDeskHubs {
 	@GET
 	@Path("/{deskHubId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getDeskHub(@PathParam("deskHubId") int deskHubId){
+	public Response getDeskHub(@PathParam ("floorId") int libraryFloorId, @PathParam("deskHubId") int deskHubId){
 		
 		ResultSet result;
 		
 		List<Integer> params = new ArrayList<Integer>();
+		params.add(libraryFloorId);
 		params.add(deskHubId);
 		
 		result = DBManager.executeProcedureWithParam(DBConstants.GET_DESKHUBSBYID, params);
@@ -67,24 +76,13 @@ public class RestApiDeskHubs {
 			result.next();
 			int hubId = result.getInt("DeskHubId");
 			int floorId = result.getInt("LibraryFloorId");
-			String deskHubLabel = result.getString("DeskHubLabel");
-			DeskHub dh = new DeskHub(hubId, floorId, deskHubLabel);
+			int coordinateX = result.getInt("CoordinateX");
+			int coordinateY = result.getInt("CoordinateY");
+			DeskHub dh = new DeskHub(hubId, floorId, coordinateX, coordinateY);
 			return Response.ok().entity(dh).build();
 		} catch (SQLException e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}
-	}
-	
-	@Path("/statichubs")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public List<DeskHubWithDesk> getStaticFloors(){
-		
-		List<DeskHubWithDesk> deskHubs = new ArrayList<DeskHubWithDesk>();
-		deskHubs.add(new DeskHubWithDesk(1,"DC-HUB-A",1,1,1));
-		deskHubs.add(new DeskHubWithDesk(2,"DC-HUB-B",1,1,1));
-		return deskHubs;
-		
 	}
 
 }
