@@ -29,6 +29,7 @@ public class DBConstants {
 	public static final String UPDATE_DESKHUB_LOCATION = "wp_UpdateDeskHubLocation(?)";
 	public static final String UPDATE_DESK_LOCATION = "wp_UpdateDeskLocation(?)";
 	public static final String UPDATE_DESK_STATE = "wp_UpdateDeskState(?)";
+	public static final String UPDATE_ONE_DESKSTATE = "wp_UpdateSingleDesk(?,?)";
 	
 	public static final String INSERT_DESK = "wp_InsertDesk(?,?,?,?)";
 	public static final String INSERT_DESKHUB = "wp_InsertDeskHub(?,?,?)";

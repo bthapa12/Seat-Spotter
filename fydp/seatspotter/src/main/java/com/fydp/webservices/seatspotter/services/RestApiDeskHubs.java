@@ -9,6 +9,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -17,13 +18,15 @@ import com.fydp.webservices.seatspotter.database.DBConstants;
 import com.fydp.webservices.seatspotter.database.DBManager;
 import com.fydp.webservices.seatspotter.database.model.DeskHub;
 import com.fydp.webservices.seatspotter.database.model.DeskHubWithDesk;
+import com.fydp.webservices.seatspotter.database.model.LibraryWithDesk;
 
 @Path("/floors/{floorId}/deskhubs")
 public class RestApiDeskHubs {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<DeskHubWithDesk> getDeskHubs(@PathParam("floorId") int floorId){
+	//public List<DeskHubWithDesk> getDeskHubs(@PathParam("floorId") int floorId){
+	public Response getDeskHubs(@PathParam("floorId") int floorId){
 		ResultSet result;
 		List<DeskHubWithDesk> deskHubs = new ArrayList<DeskHubWithDesk>();
 		
@@ -31,7 +34,7 @@ public class RestApiDeskHubs {
 		List<Integer> params = new ArrayList<Integer>();
 		params.add(floorId);
 		
-		result = DBManager.executeProcedureWithParam(DBConstants.GET_DESKHUBS, params);
+		result = DBManager.selectProcedureWithParam(DBConstants.GET_DESKHUBS, params);
 		
 		try{
 			while (result.next()){
@@ -39,6 +42,8 @@ public class RestApiDeskHubs {
 				int libraryFloorId = result.getInt("LibraryFloorID");
 				int coordinateX = result.getInt("CoordinateX");
 				int coordinateY = result.getInt("CoordinateY");
+				int lengthX = result.getInt("LengthX");
+				int lengthY = result.getInt("LengthY");
 				int totalDesks = result.getInt("TotalDesks");
 				int emptyDesks = result.getInt("EmptyDesks");
 				int unknownState = result.getInt("UnknownState");
@@ -46,7 +51,9 @@ public class RestApiDeskHubs {
 				deskHubs.add(new DeskHubWithDesk(deskHubId, 
 							libraryFloorId, 
 							coordinateX, 
-							coordinateY, 
+							coordinateY,
+							lengthX,
+							lengthY,
 							totalDesks,
 							emptyDesks,
 							unknownState));
@@ -55,7 +62,13 @@ public class RestApiDeskHubs {
 			e.printStackTrace();
 		}
 		
-		return deskHubs;
+		GenericEntity<List<DeskHubWithDesk>> entity = new GenericEntity<List<DeskHubWithDesk>>(deskHubs){};
+		return Response.ok()
+				.entity(entity)
+				.header("Access-Control-Allow-Origin", "*")
+				.header("Acess-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+				.allow("OPTIONS")
+				.build();
 	}
 	
 	
@@ -70,7 +83,7 @@ public class RestApiDeskHubs {
 		params.add(libraryFloorId);
 		params.add(deskHubId);
 		
-		result = DBManager.executeProcedureWithParam(DBConstants.GET_DESKHUBSBYID, params);
+		result = DBManager.selectProcedureWithParam(DBConstants.GET_DESKHUBSBYID, params);
 		
 		try {
 			result.next();
@@ -78,8 +91,15 @@ public class RestApiDeskHubs {
 			int floorId = result.getInt("LibraryFloorId");
 			int coordinateX = result.getInt("CoordinateX");
 			int coordinateY = result.getInt("CoordinateY");
-			DeskHub dh = new DeskHub(hubId, floorId, coordinateX, coordinateY);
-			return Response.ok().entity(dh).build();
+			int lengthX = result.getInt("LengthX");
+			int lengthY = result.getInt("LengthY");
+			DeskHub dh = new DeskHub(hubId, floorId, coordinateX, coordinateY, lengthX, lengthY);
+			return Response.ok()
+					.entity(dh)
+					.header("Access-Control-Allow-Origin", "*")
+					.header("Acess-Control-Allow-Methods", "GET, POST, DELETE, PUT")
+					.allow("OPTIONS")
+					.build();
 		} catch (SQLException e) {
 			return Response.status(Status.INTERNAL_SERVER_ERROR).build();
 		}

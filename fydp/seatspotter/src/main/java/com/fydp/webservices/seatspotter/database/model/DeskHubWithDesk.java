@@ -8,18 +8,22 @@ public class DeskHubWithDesk {
 	private int libraryFloorId;
 	private int coordinateX;
 	private int coordinateY;
+	private int lengthX;
+	private int lengthY;
 	private int totalDesks;
 	private int emptyDesks;
 	private int unknownState;
 	
 	public DeskHubWithDesk(){}
 	
-	public DeskHubWithDesk(int deskHubId, int libraryFloorId, int coordinateX, int coordinateY, int totalDesks,
-			int emptyDesks, int unknownState) {
+	public DeskHubWithDesk(int deskHubId, int libraryFloorId, int coordinateX, int coordinateY, 
+			int lengthX, int lengthY, int totalDesks, int emptyDesks, int unknownState) {
 		this.deskHubId = deskHubId;
 		this.libraryFloorId = libraryFloorId;
 		this.coordinateX = coordinateX;
 		this.coordinateY = coordinateY;
+		this.lengthX = lengthX;
+		this.lengthY = lengthY;
 		this.totalDesks = totalDesks;
 		this.emptyDesks = emptyDesks;
 		this.unknownState = unknownState;
@@ -65,6 +69,22 @@ public class DeskHubWithDesk {
 		this.libraryFloorId = libraryFloorId;
 	}
 
+	public int getLengthX() {
+		return lengthX;
+	}
+
+	public void setLengthX(int lengthX) {
+		this.lengthX = lengthX;
+	}
+
+	public int getLengthY() {
+		return lengthY;
+	}
+
+	public void setLengthY(int lengthY) {
+		this.lengthY = lengthY;
+	}
+
 	public int getCoordinateX() {
 		return coordinateX;
 	}
@@ -85,11 +105,9 @@ public class DeskHubWithDesk {
 	public String toString() {
 		return "DeskHubWithDesk [deskHubId=" + deskHubId + ", libraryFloorId="
 				+ libraryFloorId + ", coordinateX=" + coordinateX
-				+ ", coordinateY=" + coordinateY + ", totalDesks=" + totalDesks
+				+ ", coordinateY=" + coordinateY + ", lengthX=" + lengthX
+				+ ", lengthY=" + lengthY + ", totalDesks=" + totalDesks
 				+ ", emptyDesks=" + emptyDesks + ", unknownState="
 				+ unknownState + "]";
 	}
-	
-	
-	
 }
